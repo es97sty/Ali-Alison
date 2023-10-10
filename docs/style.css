@@ -3,178 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alison</title>
+    <title>Document</title>
+
     <style>
         body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height:100vh;
-            background-color: #073b4c;
+            margin: 0;
+            background: #020202;
+            cursor: crosshair;
           }
-          
-          .birthdayCard {
-            position: relative;
-            width: 250px;
-            height:350px;
-            cursor: pointer;
-            transform-style: preserve-3d;
-            transform: perspective(2500px);
-            transition: 1s;
-          }
-          
-          .birthdayCard:hover {
-            transform: perspective(2500px) rotate(5deg);
-            box-shadow: inset 100px 20px 100px rgba(0,0,0,.2), 0 10px 100px rgba(0,0,0,0.5);
-          }
-          
-          .birthdayCard:hover .cardFront {
-            transform: rotateY(-160deg); 
-          }
-          
-          .birthdayCard:hover .happy {
-            visibility:hidden; 
-          }
-          
-          .cardFront {
-            position: relative;
-            background-color: #fff;
-            width: 250px;
-            height:350px;
-            overflow: hidden;
-            transform-origin: left;
-            box-shadow: inset 100px 20px 100px rgba(0,0,0,.2), 30px 0 50px rgba(0,0,0,0.4);
-            transition: .6s;
-          }
-          
-          .happy {
-            font-family: Tahoma, sans-serif;
-            text-align: center;
-            margin:30px; 
-            background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-            transition: .1s;
-          }
-          
-          .balloons {
+          canvas{display:block}
+          h1 {
             position: absolute;
-          }
-          
-          .balloonOne, .balloonTwo, .balloonThree, .balloonFour {
-            position: absolute;
-            width: 85px;
-            height:95px;
-            border-radius:50%;
-          }
-          
-          .balloonOne {
-            background-color: rgb(239, 71, 111, 0.7);
-            left:-10px;
-            top:50px;
-          }
-          
-          .balloonTwo {
-            background-color: rgb(6, 214, 160, 0.7);
-            left:50px;
-            top:20px;
-          }
-          
-          .balloonThree {
-            background-color: rgb(255, 209, 102, 0.7);
-            left:110px;
-            top:50px;
-          }
-          
-          .balloonFour {
-            background-color: rgb(17, 138, 178, 0.7);
-            left:170px;
-            top:20px;
-          }
-          
-          .balloonOne:before, .balloonTwo:before, .balloonThree:before, .balloonFour:before {
-            content:"";
-            position: absolute;
-            width:1px;
-            height: 155px;
-            background-color: #ffd166;
-            top:95px;
-            left:43px;
-          }
-          
-          .balloonOne:after, .balloonTwo:after, .balloonThree:after, .balloonFour:after {
-            content:"";
-            position: absolute;
-            border-right: 7px solid transparent;
-            border-left: 7px solid transparent;
-            top:94px;
-            left:37px;
-          }
-          
-          .balloonOne:after {
-            border-bottom: 10px solid #ef476f;
-          }
-          
-          .balloonTwo:after {
-            border-bottom: 10px solid #06d6a0;
-          }
-          
-          .balloonThree:after {
-            border-bottom: 10px solid #ffd166;
-          }
-          
-          .balloonFour:after {
-            border-bottom: 10px solid #118ab2;
-          }
-          
-          .cardInside {
-            position: absolute;
-            background-color: #fff;
-            width: 250px;
-            height:350px;
-            z-index:-1;
-            left:0;
-            top:0;
-            box-shadow: inset 100px 20px 100px rgba(0,0,0,0.2);
-          }
-          
-          p {
-            font-family: 'Brush Script MT', cursive;
-            margin: 40px;
-            color: #333;
-          }
-          
-          .name {
-            position: absolute;
-            left:150px;
-            top:200px;
-            color: #333;
-          }
-          
-          .back {
-            font-family: Tahoma, sans-serif;
-            color: #333;
-            text-align: center;
-            margin:30px; 
-            outline-color:#333;
-            outline-style: dotted;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-family: "Source Sans Pro";
+            font-size: 5em;
+            font-weight: 900;
+            -webkit-user-select: none;
+            user-select: none;
           }
     </style>
 </head>
 <body>
-    <div class="birthdayCard">
-        <div class="cardFront"><h3 class="happy">heyyyyyy</h3>
-        <div class="balloons">
-          <div class="balloonOne"></div>
-          <div class="balloonTwo"></div>
-          <div class="balloonThree"></div>
-          <div class="balloonFour"></div>
-        </div>
-        </div>
-          <div class="cardInside">
-            <h3 class="back">Holi. </h3>
-            <p>ES un buen dia el de hoy</p>
-            <p>Feliz Cumpleaños, Dios te Bendiga y te guarde</p>
-            <p class="name">Alison</p>
-          </div>
-        </div>
+    <h1>Heyy </h1>
+<canvas id="birthday"></canvas>
+
+    <h2>Feliz cumpleaños</h2>
+
+    <h3>Dios te Bendiga</h3>
+<script>
+    // helper functions
+const PI2 = Math.PI * 2
+const random = (min, max) => Math.random() * (max - min + 1) + min | 0
+const timestamp = _ => new Date().getTime()
+
+// container
+class Birthday {
+  constructor() {
+    this.resize()
+
+    // create a lovely place to store the firework
+    this.fireworks = []
+    this.counter = 0
+
+  }
+  
+  resize() {
+    this.width = canvas.width = window.innerWidth
+    let center = this.width / 2 | 0
+    this.spawnA = center - center / 4 | 0
+    this.spawnB = center + center / 4 | 0
+    
+    this.height = canvas.height = window.innerHeight
+    this.spawnC = this.height * .1
+    this.spawnD = this.height * .5
+    
+  }
+  
+  onClick(evt) {
+     let x = evt.clientX || evt.touches && evt.touches[0].pageX
+     let y = evt.clientY || evt.touches && evt.touches[0].pageY
+     
+     let count = random(3,5)
+     for(let i = 0; i < count; i++) this.fireworks.push(new Firework(
+        random(this.spawnA, this.spawnB),
+        this.height,
+        x,
+        y,
+        random(0, 260),
+        random(30, 110)))
+          
+     this.counter = -1
+     
+  }
+  
+  update(delta) {
+    ctx.globalCompositeOperation = 'hard-light'
+    ctx.fillStyle = `rgba(20,20,20,${ 7 * delta })`
+    ctx.fillRect(0, 0, this.width, this.height)
+
+    ctx.globalCompositeOperation = 'lighter'
+    for (let firework of this.fireworks) firework.update(delta)
+
+    // if enough time passed... create new new firework
+    this.counter += delta * 3 // each second
+    if (this.counter >= 1) {
+      this.fireworks.push(new Firework(
+        random(this.spawnA, this.spawnB),
+        this.height,
+        random(0, this.width),
+        random(this.spawnC, this.spawnD),
+        random(0, 360),
+        random(30, 110)))
+      this.counter = 0
+    }
+
+    // remove the dead fireworks
+    if (this.fireworks.length > 1000) this.fireworks = this.fireworks.filter(firework => !firework.dead)
+
+  }
+}
+
+class Firework {
+  constructor(x, y, targetX, targetY, shade, offsprings) {
+    this.dead = false
+    this.offsprings = offsprings
+
+    this.x = x
+    this.y = y
+    this.targetX = targetX
+    this.targetY = targetY
+
+    this.shade = shade
+    this.history = []
+  }
+  update(delta) {
+    if (this.dead) return
+
+    let xDiff = this.targetX - this.x
+    let yDiff = this.targetY - this.y
+    if (Math.abs(xDiff) > 3 || Math.abs(yDiff) > 3) { // is still moving
+      this.x += xDiff * 2 * delta
+      this.y += yDiff * 2 * delta
+
+      this.history.push({
+        x: this.x,
+        y: this.y
+      })
+
+      if (this.history.length > 20) this.history.shift()
+
+    } else {
+      if (this.offsprings && !this.madeChilds) {
+        
+        let babies = this.offsprings / 2
+        for (let i = 0; i < babies; i++) {
+          let targetX = this.x + this.offsprings * Math.cos(PI2 * i / babies) | 0
+          let targetY = this.y + this.offsprings * Math.sin(PI2 * i / babies) | 0
+
+          birthday.fireworks.push(new Firework(this.x, this.y, targetX, targetY, this.shade, 0))
+
+        }
+
+      }
+      this.madeChilds = true
+      this.history.shift()
+    }
+    
+    if (this.history.length === 0) this.dead = true
+    else if (this.offsprings) { 
+        for (let i = 0; this.history.length > i; i++) {
+          let point = this.history[i]
+          ctx.beginPath()
+          ctx.fillStyle = 'hsl(' + this.shade + ',100%,' + i + '%)'
+          ctx.arc(point.x, point.y, 1, 0, PI2, false)
+          ctx.fill()
+        } 
+      } else {
+      ctx.beginPath()
+      ctx.fillStyle = 'hsl(' + this.shade + ',100%,50%)'
+      ctx.arc(this.x, this.y, 1, 0, PI2, false)
+      ctx.fill()
+    }
+
+  }
+}
+
+let canvas = document.getElementById('birthday')
+let ctx = canvas.getContext('2d')
+
+let then = timestamp()
+
+let birthday = new Birthday
+window.onresize = () => birthday.resize()
+document.onclick = evt => birthday.onClick(evt)
+document.ontouchstart = evt => birthday.onClick(evt)
+
+  ;(function loop(){
+  	requestAnimationFrame(loop)
+
+  	let now = timestamp()
+  	let delta = now - then
+
+    then = now
+    birthday.update(delta / 1000)
+  	
+
+  })()
+</script>
 </body>
 </html>
