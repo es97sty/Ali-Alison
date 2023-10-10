@@ -19,7 +19,7 @@
             transform: translate(-50%, -50%);
             color: #F5F5F5;
             font-family: "Source Sans Pro";
-            font-size: 5em;
+            font-size: 3em;
             font-weight: 900;
             -webkit-user-select: none;
             user-select: none;
@@ -30,7 +30,7 @@
             top: 40%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 3em;
+            font-size: 2em;
             color: #F99417;
             font-family: "Source Sans Pro";
 
@@ -46,7 +46,7 @@
             transform: translate(-50%, -50%);
             color: #F5F5F5;
             font-family: "Source Sans Pro";
-            font-size: 1.5em;
+            font-size: 1em;
             font-weight: 900;
             -webkit-user-select: none;
             user-select: none;
@@ -67,7 +67,13 @@
           audio {
             transform: translate(-50%, -50%);
             position: absolute;
-            top: 90%;
+            top: 2%;
+            left: 50%;
+          }
+          .p2 p {
+            transform: translate(-50%, -50%);
+            position: absolute;
+            top: 5%;
             left: 50%;
           }
 
@@ -75,11 +81,17 @@
 </head>
 <body>
 
-  <audio controls>
+  <div class="p2" >
+    <audio controls>
       <source src="ultimocafe.ogg"  type="audio/ogg">
     <source src="ultimocafe.mp3" type="audio/mpeg">
       <source src="ultimocafe.maw"  type="audio/maw">
   </audio>
+    <p>
+        reproduce el audio antes de comenzar
+    </p>
+</div>
+
 
   <h1>Heyy, </h1>
   <h2> Hola Ali, &#128522;</h2>
@@ -87,6 +99,10 @@
 
   <p>Pd: Presiona cualquier lado de la pantalla </p>
 
+<audio controls loop>
+  <source src="ultimocafe.ogg"  type="audio/ogg">
+  <source src="ultimocafe.mp3"  type="audio/mpeg">
+</audio>
 
 <canvas id="birthday"></canvas>
 
